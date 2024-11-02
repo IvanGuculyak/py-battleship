@@ -78,18 +78,18 @@ class Battleship:
             print(" ".join(row))
 
     def _validate_field(self) -> None:
-        if len(self.ships) != 10:
+        if len(self.ships) == 10:
+            ships_count = {1: 0, 2: 0, 3: 0, 4: 0}
+
+            for ship in self.ships:
+                decks_count = len(ship.decks)
+                if decks_count in ships_count:
+                    ships_count[decks_count] += 1
+
+            if ships_count != {1: 4, 2: 3, 3: 2, 4: 1}:
+                raise ValueError("Invalid deck count.")
+        else:
             raise ValueError("Should be 10 ships.")
-
-        ships_count = {1: 0, 2: 0, 3: 0, 4: 0}
-
-        for ship in self.ships:
-            decks_count = len(ship.decks)
-            if decks_count in ships_count:
-                ships_count[decks_count] += 1
-
-        if ships_count != {1: 4, 2: 3, 3: 2, 4: 1}:
-            raise ValueError("Invalid deck count.")
 
         for ship in self.ships:
             for deck in ship.decks:
